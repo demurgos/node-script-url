@@ -1,6 +1,6 @@
 {
   "name": "node-script-url",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Parser for Node's V8 script URL values",
   "private": true,
   "main": "dist/lib/index",

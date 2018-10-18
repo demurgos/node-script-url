@@ -1,4 +1,4 @@
-# Next
+# 0.1.1 (2018-10-18)
 
 - **[Fix]** Fix detection of internal URLs.
 
