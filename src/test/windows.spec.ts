@@ -1,5 +1,5 @@
 import chai from "chai";
-import { parsePosix, ScriptUrl } from "../lib";
+import { parseWindows, ScriptUrl } from "../lib";
 
 interface TestItem {
   url: string;
@@ -24,31 +24,31 @@ const testItems: ReadonlyArray<TestItem> = [
     expected: {isRegularFile: false, scriptUrl: "internal/util/inspect.js"},
   },
   {
-    url: "/foo.js",
+    url: "C:\\foo.js",
     expected: {
       isRegularFile: true,
-      scriptUrl: "/foo.js",
+      scriptUrl: "C:\\foo.js",
       moduleType: "cjs",
-      url: "file:///foo.js",
-      path: "/foo.js",
+      url: "file:///C:/foo.js",
+      path: "C:\\foo.js",
     },
   },
   {
-    url: "file:///foo.mjs",
+    url: "file:///C:/foo.mjs",
     expected: {
       isRegularFile: true,
-      scriptUrl: "file:///foo.mjs",
+      scriptUrl: "file:///C:/foo.mjs",
       moduleType: "esm",
-      url: "file:///foo.mjs",
-      path: "/foo.mjs",
+      url: "file:///C:/foo.mjs",
+      path: "C:\\foo.mjs",
     },
   },
 ];
 
-describe("parsePosix", () => {
+describe("parseWindows", () => {
   for (const {url, expected} of testItems) {
     it(JSON.stringify(url), () => {
-      const actual: ScriptUrl = parsePosix(url);
+      const actual: ScriptUrl = parseWindows(url);
       chai.assert.deepEqual(actual, expected);
     });
   }

@@ -1,4 +1,6 @@
 import { fromPosixPath, fromSysPath, fromWindowsPath, toPosixPath, toSysPath, toWindowsPath } from "furi";
+import isWindows from "is-windows";
+import sysPath from "path";
 import url from "url";
 
 export type ModuleType = "cjs" | "esm";
@@ -25,27 +27,36 @@ export interface InternalScriptUrl {
 }
 
 export function parseSys(scriptUrl: string): ScriptUrl {
-  return parse(scriptUrl, toSysPath, fromSysPath);
+  return isWindows ? parseWindows(scriptUrl) : parsePosix(scriptUrl);
 }
 
 export function parsePosix(scriptUrl: string): ScriptUrl {
-  return parse(scriptUrl, toPosixPath, fromPosixPath);
+  return parse(scriptUrl, toPosixPath, fromPosixPath, sysPath.posix.isAbsolute);
 }
 
 export function parseWindows(scriptUrl: string): ScriptUrl {
-  return parse(scriptUrl, toWindowsPath, fromWindowsPath);
+  return parse(scriptUrl, toWindowsPath, fromWindowsPath, sysPath.win32.isAbsolute);
 }
 
-const INTERNAL_CJS_REGEX: RegExp = /^(?:\w+|internal\/[\s\S])+\.js$/;
-
-function parse(scriptUrl: string, toPath: typeof toSysPath, fromPath: typeof fromSysPath): ScriptUrl {
-  if (INTERNAL_CJS_REGEX.test(scriptUrl)) {
-    return {isRegularFile: false, scriptUrl};
+function parse(
+  scriptUrl: string,
+  toPath: typeof toSysPath,
+  fromPath: typeof fromSysPath,
+  isAbsolutePath: typeof sysPath.isAbsolute,
+): ScriptUrl {
+  if (isAbsolutePath(scriptUrl)) {
+    return {
+      isRegularFile: true,
+      scriptUrl,
+      moduleType: "cjs",
+      url: fromPath(scriptUrl).href,
+      path: scriptUrl,
+    };
   }
 
   try {
     const urlObj: url.URL = new url.URL(scriptUrl);
-    if (urlObj.protocol !== "file") {
+    if (urlObj.protocol !== "file:") {
       return {isRegularFile: false, scriptUrl};
     }
     return {
@@ -56,12 +67,10 @@ function parse(scriptUrl: string, toPath: typeof toSysPath, fromPath: typeof fro
       path: toPath(urlObj.href),
     };
   } catch (err) {
-    return {
-      isRegularFile: true,
-      scriptUrl,
-      moduleType: "cjs",
-      url: fromPath(scriptUrl).href,
-      path: scriptUrl,
-    };
+    if (err.code === "ERR_INVALID_URL") {
+      return {isRegularFile: false, scriptUrl};
+    } else {
+      throw err;
+    }
   }
 }
