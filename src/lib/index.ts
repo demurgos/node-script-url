@@ -27,7 +27,7 @@ export interface InternalScriptUrl {
 }
 
 export function parseSys(scriptUrl: string): ScriptUrl {
-  return isWindows ? parseWindows(scriptUrl) : parsePosix(scriptUrl);
+  return isWindows() ? parseWindows(scriptUrl) : parsePosix(scriptUrl);
 }
 
 export function parsePosix(scriptUrl: string): ScriptUrl {
