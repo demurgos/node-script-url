@@ -1,20 +1,25 @@
-import { fromPosixPath, fromSysPath, fromWindowsPath, toPosixPath, toSysPath, toWindowsPath } from "furi";
+import { toPosixPath, toSysPath, toWindowsPath } from "furi";
 import isWindows from "is-windows";
-import sysPath from "path";
-import url from "url";
 
-export type ModuleType = "cjs" | "esm";
-
-export type ScriptUrl = FileScriptUrl | InternalScriptUrl;
+export type ParsedScriptUrl = FileScriptUrl | InternalScriptUrl;
 
 /**
  * Regular file.
  */
 export interface FileScriptUrl {
-  isRegularFile: true;
-  scriptUrl: string;
-  moduleType: ModuleType;
+  /**
+   * Input URL
+   */
   url: string;
+
+  /**
+   * Boolean indicating if this is a non-internal `file://` URL (always `true`).
+   */
+  isFileUrl: true;
+
+  /**
+   * Corresponding file path.
+   */
   path: string;
 }
 
@@ -22,55 +27,36 @@ export interface FileScriptUrl {
  * Internal or non-file URL.
  */
 export interface InternalScriptUrl {
-  isRegularFile: false;
-  scriptUrl: string;
+  /**
+   * Input URL
+   */
+  url: string;
+
+  /**
+   * Boolean indicating if this is a non-internal `file://` URL (always `false`).
+   */
+  isFileUrl: false;
 }
 
-export function parseSys(scriptUrl: string): ScriptUrl {
-  return isWindows() ? parseWindows(scriptUrl) : parsePosix(scriptUrl);
+export function parseSys(url: string): ParsedScriptUrl {
+  return isWindows() ? parseWindows(url) : parsePosix(url);
 }
 
-export function parsePosix(scriptUrl: string): ScriptUrl {
-  return parse(scriptUrl, toPosixPath, fromPosixPath, sysPath.posix.isAbsolute);
+export function parsePosix(url: string): ParsedScriptUrl {
+  return parse(url, toPosixPath);
 }
 
-export function parseWindows(scriptUrl: string): ScriptUrl {
-  return parse(scriptUrl, toWindowsPath, fromWindowsPath, sysPath.win32.isAbsolute);
+export function parseWindows(url: string): ParsedScriptUrl {
+  return parse(url, toWindowsPath);
 }
 
 function parse(
-  scriptUrl: string,
+  url: string,
   toPath: typeof toSysPath,
-  fromPath: typeof fromSysPath,
-  isAbsolutePath: typeof sysPath.isAbsolute,
-): ScriptUrl {
-  if (isAbsolutePath(scriptUrl)) {
-    return {
-      isRegularFile: true,
-      scriptUrl,
-      moduleType: "cjs",
-      url: fromPath(scriptUrl).href,
-      path: scriptUrl,
-    };
-  }
-
-  try {
-    const urlObj: url.URL = new url.URL(scriptUrl);
-    if (urlObj.protocol !== "file:") {
-      return {isRegularFile: false, scriptUrl};
-    }
-    return {
-      isRegularFile: true,
-      scriptUrl,
-      moduleType: "esm",
-      url: urlObj.href,
-      path: toPath(urlObj.href),
-    };
-  } catch (err) {
-    if (err.code === "ERR_INVALID_URL") {
-      return {isRegularFile: false, scriptUrl};
-    } else {
-      throw err;
-    }
+): ParsedScriptUrl {
+  if (url.startsWith("file://")) {
+    return {url, isFileUrl: true, path: toPath(url)};
+  } else {
+    return {url, isFileUrl: false};
   }
 }

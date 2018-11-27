@@ -1,7 +1,7 @@
 {
   "name": "node-script-url",
   "version": "0.1.2",
-  "description": "Parser for Node's V8 script URL values",
+  "description": "Parse Node script URLs",
   "private": true,
   "main": "dist/lib/index",
   "types": "dist/lib/index.d.ts",
@@ -23,6 +23,9 @@
     "run": [
       "test"
     ]
+  },
+  "engines": {
+    "node": ">=10.12.0"
   },
   "author": "Charles Samborski <demurgos@demurgos.net> (https://demurgos.net)",
   "license": "MIT",

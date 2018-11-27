@@ -1,55 +1,55 @@
 import chai from "chai";
-import { parsePosix, ScriptUrl } from "../lib";
+import isWindows from "is-windows";
+import { ParsedScriptUrl, parsePosix, parseSys } from "../lib";
 
 interface TestItem {
   url: string;
-  expected: ScriptUrl;
+  expected: ParsedScriptUrl;
 }
 
 const testItems: ReadonlyArray<TestItem> = [
   {
     url: "",
-    expected: {isRegularFile: false, scriptUrl: ""},
+    expected: {url: "", isFileUrl: false},
   },
   {
     url: "url.js",
-    expected: {isRegularFile: false, scriptUrl: "url.js"},
+    expected: {url: "url.js", isFileUrl: false},
   },
   {
     url: "internal/url.js",
-    expected: {isRegularFile: false, scriptUrl: "internal/url.js"},
+    expected: {url: "internal/url.js", isFileUrl: false},
   },
   {
     url: "internal/util/inspect.js",
-    expected: {isRegularFile: false, scriptUrl: "internal/util/inspect.js"},
+    expected: {url: "internal/util/inspect.js", isFileUrl: false},
   },
   {
     url: "/foo.js",
-    expected: {
-      isRegularFile: true,
-      scriptUrl: "/foo.js",
-      moduleType: "cjs",
-      url: "file:///foo.js",
-      path: "/foo.js",
-    },
+    expected: {url: "/foo.js", isFileUrl: false},
   },
   {
     url: "file:///foo.mjs",
-    expected: {
-      isRegularFile: true,
-      scriptUrl: "file:///foo.mjs",
-      moduleType: "esm",
-      url: "file:///foo.mjs",
-      path: "/foo.mjs",
-    },
+    expected: {url: "file:///foo.mjs", isFileUrl: true, path: "/foo.mjs"},
   },
 ];
 
 describe("parsePosix", () => {
   for (const {url, expected} of testItems) {
     it(JSON.stringify(url), () => {
-      const actual: ScriptUrl = parsePosix(url);
+      const actual: ParsedScriptUrl = parsePosix(url);
       chai.assert.deepEqual(actual, expected);
     });
   }
 });
+
+function parseSysSuite() {
+  for (const {url, expected} of testItems) {
+    it(JSON.stringify(url), () => {
+      const actual: ParsedScriptUrl = parseSys(url);
+      chai.assert.deepEqual(actual, expected);
+    });
+  }
+}
+
+(isWindows() ? describe.skip : describe)("parseSys (posix)", parseSysSuite);
