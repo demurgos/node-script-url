@@ -1,4 +1,4 @@
-# Next
+# 0.2.0 (2018-11-27)
 
 - **[Breaking change]** Update lib for Node 11. The new result only has
   `url` (input), `isFileUrl` (boolean indicating a regular `file://` URL) and

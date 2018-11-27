@@ -1,6 +1,6 @@
 {
   "name": "node-script-url",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Parse Node script URLs",
   "private": true,
   "main": "dist/lib/index",
