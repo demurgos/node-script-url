@@ -91,10 +91,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_.filescripturl.html#isregularfile" class="tsd-kind-icon">is<wbr>Regular<wbr>File</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_.filescripturl.html#moduletype" class="tsd-kind-icon">module<wbr>Type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_.filescripturl.html#isfileurl" class="tsd-kind-icon">is<wbr>File<wbr>Url</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_.filescripturl.html#path" class="tsd-kind-icon">path</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_.filescripturl.html#scripturl" class="tsd-kind-icon">script<wbr>Url</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_index_.filescripturl.html#url" class="tsd-kind-icon">url</a></li>
 							</ul>
 						</section>
@@ -104,24 +102,19 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="isregularfile" class="tsd-anchor"></a>
-					<h3>is<wbr>Regular<wbr>File</h3>
-					<div class="tsd-signature tsd-kind-icon">is<wbr>Regular<wbr>File<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">true</span></div>
+					<a name="isfileurl" class="tsd-anchor"></a>
+					<h3>is<wbr>File<wbr>Url</h3>
+					<div class="tsd-signature tsd-kind-icon">is<wbr>File<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/demurgos/node-script-url/blob/ea0d43c/src/lib/index.ts#L14">index.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/demurgos/node-script-url/blob/6796bc4/src/lib/index.ts#L18">index.ts:18</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="moduletype" class="tsd-anchor"></a>
-					<h3>module<wbr>Type</h3>
-					<div class="tsd-signature tsd-kind-icon">module<wbr>Type<span class="tsd-signature-symbol">:</span> <a href="../modules/_index_.html#moduletype" class="tsd-signature-type">ModuleType</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/demurgos/node-script-url/blob/ea0d43c/src/lib/index.ts#L16">index.ts:16</a></li>
-						</ul>
-					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Boolean indicating if this is a non-internal <code>file://</code> URL (always <code>true</code>).</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="path" class="tsd-anchor"></a>
@@ -129,19 +122,14 @@
 					<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/demurgos/node-script-url/blob/ea0d43c/src/lib/index.ts#L18">index.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/demurgos/node-script-url/blob/6796bc4/src/lib/index.ts#L23">index.ts:23</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="scripturl" class="tsd-anchor"></a>
-					<h3>script<wbr>Url</h3>
-					<div class="tsd-signature tsd-kind-icon">script<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/demurgos/node-script-url/blob/ea0d43c/src/lib/index.ts#L15">index.ts:15</a></li>
-						</ul>
-					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Corresponding file path.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="url" class="tsd-anchor"></a>
@@ -149,9 +137,14 @@
 					<div class="tsd-signature tsd-kind-icon">url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/demurgos/node-script-url/blob/ea0d43c/src/lib/index.ts#L17">index.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/demurgos/node-script-url/blob/6796bc4/src/lib/index.ts#L13">index.ts:13</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Input URL</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -174,16 +167,10 @@
 						<a href="_index_.filescripturl.html" class="tsd-kind-icon">File<wbr>Script<wbr>Url</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_index_.filescripturl.html#isregularfile" class="tsd-kind-icon">is<wbr>Regular<wbr>File</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_index_.filescripturl.html#moduletype" class="tsd-kind-icon">module<wbr>Type</a>
+								<a href="_index_.filescripturl.html#isfileurl" class="tsd-kind-icon">is<wbr>File<wbr>Url</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_index_.filescripturl.html#path" class="tsd-kind-icon">path</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_index_.filescripturl.html#scripturl" class="tsd-kind-icon">script<wbr>Url</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_index_.filescripturl.html#url" class="tsd-kind-icon">url</a>
@@ -196,10 +183,7 @@
 						<a href="_index_.internalscripturl.html" class="tsd-kind-icon">Internal<wbr>Script<wbr>Url</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
-						<a href="../modules/_index_.html#moduletype" class="tsd-kind-icon">Module<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
-						<a href="../modules/_index_.html#scripturl" class="tsd-kind-icon">Script<wbr>Url</a>
+						<a href="../modules/_index_.html#parsedscripturl" class="tsd-kind-icon">Parsed<wbr>Script<wbr>Url</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../modules/_index_.html#parse" class="tsd-kind-icon">parse</a>
